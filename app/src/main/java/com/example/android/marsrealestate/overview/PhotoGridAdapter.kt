@@ -27,11 +27,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.android.marsrealestate.databinding.GridViewItemBinding
 import com.example.android.marsrealestate.network.MarsProperty
 
-@BindingAdapter("listData")
-fun bindRecyclerView(recyclerView: RecyclerView, data: List<MarsProperty>?) {
-    val adapter = recyclerView.adapter as PhotoGridAdapter
-    adapter.submitList(data)
-}
+
 
 class PhotoGridAdapter : ListAdapter<MarsProperty, PhotoGridAdapter.MarsPropertyViewHolder>(DiffCallback) {
     object DiffCallback : DiffUtil.ItemCallback<MarsProperty>() {
