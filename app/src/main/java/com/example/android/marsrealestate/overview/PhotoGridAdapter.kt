@@ -29,7 +29,7 @@ import com.example.android.marsrealestate.network.MarsProperty
 
 
 
-class PhotoGridAdapter : ListAdapter<MarsProperty, PhotoGridAdapter.MarsPropertyViewHolder>(DiffCallback) {
+class PhotoGridAdapter(val onClickListener: OnClickListener) : ListAdapter<MarsProperty, PhotoGridAdapter.MarsPropertyViewHolder>(DiffCallback) {
     object DiffCallback : DiffUtil.ItemCallback<MarsProperty>() {
         override fun areItemsTheSame(oldItem: MarsProperty, newItem: MarsProperty): Boolean {
             return oldItem === newItem
@@ -48,6 +48,9 @@ class PhotoGridAdapter : ListAdapter<MarsProperty, PhotoGridAdapter.MarsProperty
     override fun onBindViewHolder(holder: MarsPropertyViewHolder, position: Int) {
         val marsProperty = getItem(position)
         holder.bind(marsProperty)
+        holder.itemView.setOnClickListener{
+            onClickListener.clickListener(marsProperty)
+        }
     }
 
 
@@ -58,6 +61,7 @@ class PhotoGridAdapter : ListAdapter<MarsProperty, PhotoGridAdapter.MarsProperty
             binding.executePendingBindings()
         }
     }
-
-
+    class OnClickListener(val clickListener: (marsProperty:MarsProperty) -> Unit){
+            fun onClick(marsProperty: MarsProperty) = clickListener(marsProperty)
+    }
 }

@@ -42,11 +42,15 @@ class OverviewViewModel : ViewModel() {
         get() = _status
 
 
-    private val _properties = MutableLiveData<List<MarsProperty>>()
+    private val _navigateToSelectedProperty = MutableLiveData<MarsProperty>()
 
+    val navigateToSelectedProperty: LiveData<MarsProperty>
+        get() = _navigateToSelectedProperty
+
+
+    private val _properties = MutableLiveData<List<MarsProperty>>()
     val properties: LiveData<List<MarsProperty>>
         get() = _properties
-
 
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main )
@@ -63,6 +67,13 @@ class OverviewViewModel : ViewModel() {
         viewModelJob.cancel()
     }
 
+    fun displayPropertyDetails(marsProperty: MarsProperty) {
+        _navigateToSelectedProperty.value = marsProperty
+    }
+
+    fun displayPropertyDetailsComplete() {
+        _navigateToSelectedProperty.value = null
+    }
     /**
      * Sets the value of the status LiveData to the Mars API status.
      */
